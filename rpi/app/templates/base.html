@@ -1,0 +1,119 @@
+<!-- makes sure that most recent version of code is run by client -->
+<?php
+Header("Cache-Control: max-age=10, must-revalidate");
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="{{url_for('static', filename='styles/styling.css')}}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="static/jquery.js"></script>
+	<script src="static/socketio.js"></script>
+	<script src="static/joy.js"></script>
+	<script src="static/base.js"></script>
+
+	<!-- Leaflet -->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/leaflet.css')}}"/>
+	<script type='text/javascript' src="static/leaflet.js"></script>
+	<!-- Leaflet -->
+	<title>Robot web controller</title>
+</head>
+<header>
+	<h1>Robot web controller</h1>
+	<label for="ping"><h2>Pyboard status</h2></label>
+	<span id="ping" class="dot inactive"></span>
+</header>
+<body>
+	<div class="panel_container">
+	<div id="first">
+		<div class="stream_container">
+			{% block video_feed %}{% endblock %}
+		</div>
+		<div id="joystick_container">
+			<label for="pwr_ratio">Power output</label>
+			<span class="pwr_slider"><p>1</p><input type="range" min="0" max="2" step="1" value="0" id="pwr_ratio"><p>3</p></span>
+			<span id="joyDiv"></span>
+			<button id="stop">Stop</button>
+		</div>
+		<div class="servo">
+			<div class="servo_controller">
+				<select id="servo_setup">
+					<option value="1">Servo 1</option>
+					<option value="2">Servo 2</option>
+					<option value="3">Servo 3</option>
+					<option value="4">Servo 4</option>
+				</select>
+				<input id="servo_submit" type="submit" value="Setup">
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="panel_container">
+	<div id="second">
+		<input type="number" id="lat" placeholder="Latitude">
+		<input type="number" id="lon" placeholder="Longitude">
+		<button id="show_waypoint">Show on map</button>
+		<button id="insert_waypoint">Insert</button>
+		<button id="add_home">Add home</button>
+		<select id="waypoint_list">
+			<option value="" disabled selected hidden>Waypoints</option>
+		</select>
+		<button id="upload_waypoint">Upload</button>
+		<button id="delete_waypoint">Delete</button>
+		<button id="clear_map">Clear map</button>
+		<div id="map_container">
+			<div id="map_div"></div>
+			<!-- Script must be added after the map_container is loaded in the DOM -->
+			<script src="static/map.js"></script>
+		</div>
+
+		<h3 id="battery_header">Cell voltage</h3>
+		<span id="cell_1" class="cell"></span>
+		<span id="cell_2" class="cell"></span>
+		<span id="cell_3" class="cell"></span>
+		<span id="cell_4" class="cell"></span>
+
+		<h3 id="motor_header">Motor current</h3>
+		<span id="motor_current"></span>
+
+		<h3 id="gps_header">GPS</h3>
+		<span id="gps_lock" class="dot no_lock"></span>
+		<label for="cur_coor">Current coord</label>
+		<span id="cur_coor"></span>
+		<label for="cur_head">Current heading</label>
+		<span id="cur_head"></span>
+		<label for="tar_head">Target heading</label>
+		<span id="tar_head"></span>
+		<label for="way_num">Waypoint #</label>
+		<span id="way_num"></span>
+		<label for="next_coor">Target coord</label>
+		<span id="next_coor"></span>
+		<label for="next_dist">Dist</label>
+		<span id="next_dist"></span>
+		<label for="speed">Speed</label>
+		<span id="speed"></span>
+
+		<button class="nav_btn" id="start_nav">Start nav.</button>
+		<button class="nav_btn" id="pause_nav">Pause nav.</button>
+		<button class="nav_btn" id="stop_nav">Stop nav.</button>
+		<button class="nav_btn" id="home">Go home</button>
+	</div>
+	</div>
+
+	<div class="panel_container">
+	<div id="third">
+		<h3 id="command_history_label">Command history</h3>
+		{% block command_history %}{% endblock %}
+		<button id="uart_on">UART on</button>
+		<button id="calibrate">Calibrate IMU</button>
+		<button class="restarts" id="pyb_restart">Pyb restart</button>
+		<button class="restarts" id="rpi_restart">RPi restart</button>
+		<button class="restarts" id="rpi_shutdown">RPi shutdown</button>
+		<label for="cmd">Command:</label>
+		<input type="text" name="cmd">
+		<input id="cmd_submit" type="submit" value="Submit">
+	</div>
+	</div>
+</body>
+</html>

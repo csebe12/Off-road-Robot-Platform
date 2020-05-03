@@ -1,0 +1,10 @@
+{% extends 'video_feed.html' %}
+
+
+{% block command_history %}
+<ul class="command_history">
+	{% for command in commands %}
+	<li class={{ command[0] }}>{{ command[1] }}</li>
+	{% endfor %}
+</ul>
+{% endblock %}
