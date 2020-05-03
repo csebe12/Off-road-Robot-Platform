@@ -13,8 +13,8 @@ The SD card cannot be directly mounted on startup, because the buck converter ca
 ### Files
 Upload all the files from the micropython folder to the Pyboard's SD card except for the pybrestart.py
 ## Raspberry Pi
-###[Enable I2C and SSH](https://itsfoss.com/ssh-into-raspberry/)
-###Install Flask
+### [Enable I2C and SSH](https://itsfoss.com/ssh-into-raspberry/)
+### Install Flask
 ```
 sudo pip install flask + pip install -U flask-cors
 ```
@@ -43,4 +43,6 @@ Here is an overview of the components:
 <img src="diagrams/components.png">
 Below is the system's block diagram
 <img src="diagrams/system-block.png">
+## Commands
+To see the full list of complete commands, examine the cmd.py file in the micropython/lib directory.
 
