@@ -92,8 +92,8 @@ function gps_logger(func, data){
             draw_waypoints();
             break;
         case "next_waypoint":
-            draw_waypoints(parseInt(data));
-            prev_next_waypoint = parseInt(data);
+            draw_waypoints(next_waypoint=parseInt(data)-1);
+            prev_next_waypoint = parseInt(data)-1;
             break;
         case "clear":
             clear_map();
@@ -135,18 +135,18 @@ function draw_waypoints(next_waypoint=0){
     if (next_waypoint != prev_next_waypoint){
         var curr_icon;
         for (var i=0; i<waypoints.length;i++){
-            if (i == 0){
-                curr_icon = home_icon;
-            }
-            else{
-                curr_icon = waypoint_icon;
-            }
             if (i == next_waypoint){
                 if (i == 0){
                     curr_icon = home_icon_red;
                 }
                 else{
                    curr_icon = next_waypoint_icon; 
+                }
+            }
+            else{
+                curr_icon = waypoint_icon;
+                if (i == 0){
+                    curr_icon = home_icon;
                 }
             }
             waypoint_markers.push(new L.marker(waypoints[i], {icon: curr_icon}).bindPopup("#: " + (i+1) + "<br>Lat: " + waypoints[i][0].toFixed(6) + "<br>Lat: " + waypoints[i][1].toFixed(6)).addTo(map));

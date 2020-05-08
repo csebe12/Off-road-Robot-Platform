@@ -38,6 +38,8 @@ sudo -E -H python3 thread.py
 Use the rc.local method with the commmand above following [this tutorial](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/)
 ### Reverting to WiFi
 By running wifi-access.sh you can revert back to using WiFi. Conversely, by running access-point.sh the Raspberry Pi will act as an access point. You must restart before the changes take place.
+### Offline map tiles
+You can save Google Maps tiles from your desired area using [this tutorial](http://rgooglemaps.r-forge.r-project.org/OfflineMaps-RgoogleMaps-leaflets.html). Once you downloaded the map tiles, save it on the Raspberry Pi in the app/static/mapTiles folder.
 # Operation
 Here is an overview of the components:
 <img src="diagrams/components.png">

@@ -48,10 +48,13 @@ class PLANNER:
                 a = math.sin(d_lat/2)**2 + math.cos(A[0])*math.cos(B[0])*math.sin(d_long/2)**2
                 c = 2*math.atan2(math.sqrt(a), math.sqrt(1-a))
                 self._distance = R*c
-                # Updates waypoints if robot has reached waypoint
-                self.waypoint_manager()
                 self.i = 0
-                return True, (self._distance, self._bearing)
+                # Updates waypoints if robot has reached waypoint
+                flag = self.waypoint_manager()
+                if flag:
+                    return True, (self._distance, self._bearing)
+                else:
+                    return False, (None, None)
             except TypeError:
                 if self.i > 5:
                     cmd.send_uart("Inaccurate hdop in dist_bearing", log_flag)
@@ -73,11 +76,13 @@ class PLANNER:
                     self._next_waypoint = self._waypoints[self._curr_waypoint_num]
                     msg = "Waypoint reached, heading to #{0} at {1}\n".format(str(self._curr_waypoint_num+1), str(self._next_waypoint))
                     cmd.send_uart(msg, log_flag)
-                    msg = {"type": "gps", "func": "curr_waypoint", "index": self._curr_waypoint_num+1}
+                    msg = {"type": "gps", "func": "next_waypoint", "index": str(self._curr_waypoint_num+1)}
                     msg = ujson.dump(msg)
                     cmd.send_uart(msg, log_flag)
+                    return True
                 except IndexError:
                     cmd.send_uart("Waypoint manager IndexError\n", log_flag)
+                    return False
 
             else:
                 cmd.send_uart("All waypoints have been covered", log_flag)
@@ -85,6 +90,9 @@ class PLANNER:
                 msg = {"type": "gps", "func": "next_waypoint", "index": -1}
                 msg = ujson.dump(msg)
                 cmd.send_uart(msg, log_flag)
+                return False
+        else:
+            return True
 
     def waypoint_init(self):
         try:

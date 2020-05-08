@@ -41,10 +41,11 @@ class PID:
         if self.target_flag is True:
             # t_fn is planner.dist_bearing()
             flag, (dist, bear) = self.t_fn()
-
+            self.target_flag = False
             if flag is True:
                 self.target = bear
-            self.target_flag = False
+            else:
+                return False
 
         self.feedback = global_variables.fuse.heading
 
@@ -112,9 +113,12 @@ class PID:
                 if self.enable:
                     self.pid()
             if i % 3 == 0:
-                acc = global_variables.imu.accel.xyz
-                gyr = global_variables.imu.gyro.xyz
-                mag = global_variables.imu.mag.xyz
+                try:
+                    acc = global_variables.imu.accel.xyz
+                    gyr = global_variables.imu.gyro.xyz
+                    mag = global_variables.imu.mag.xyz
+                except:
+                    cmd.send_uart("MPU reading error", log_flag)
             if i % 300 == 0:
                 msg = {"type": "gps", "func": "heading", "head": str(global_variables.fuse.heading)}
                 msg = ujson.dumps(msg)

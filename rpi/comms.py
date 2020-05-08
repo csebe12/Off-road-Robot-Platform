@@ -82,7 +82,7 @@ def ping():
             send_command("planner/status", False)
             time.sleep(2)
             send_command("sensors/motor_current", False)
-            time.sleep(2)
+            time.sleep(1)
             if (loop_counter % 7) == 0:
                 send_command("sensors/battery", False)
                 time.sleep(1)

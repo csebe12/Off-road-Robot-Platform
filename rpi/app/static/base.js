@@ -271,7 +271,6 @@ function gps_data(data){
 					nav_btn.removeClass().addClass("nav_btn");
 					break;
 			}
-
 			break;
 		case "position":
 			var lat = parseFloat(data["lat"]);
@@ -395,5 +394,5 @@ function move_servo(event){
 }
 
 function motor_current(data){
-	$("#motor_current").text((parseFloat(data["current"])/1000).toFixed(1) + " A");
+	$("#motor_current").text((parseFloat(data["current"])).toFixed(1) + " mA");
 }

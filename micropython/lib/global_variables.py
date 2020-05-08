@@ -18,7 +18,7 @@ def init():
     global uart
     # Initialising UART6 (Y1, Y2)
     uart = UART(6, baudrate=38400, timeout=10, read_buf_len=200)
-    # pyb.repl_uart(uart)
+    pyb.repl_uart(uart)
     print('RPi UART setup')
 
     global uart_gps
@@ -52,7 +52,7 @@ def init():
         mpu_addr = "MPU9250 id: {:X}".format(imu.mpu_addr)
         cmd.send_uart(mpu_addr, True)
         fuse = Fusion()
-    except MPUException:
+    except:
         cmd.send_uart("No imu detected", True)
 
     sensors.ina_init(i2c)
