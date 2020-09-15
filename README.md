@@ -1,6 +1,23 @@
 # Off-road-Robot-Platform
 This repository contains the instructions and code to set up an off-road tracked platform using DFRobot's Yuewalker chassis.
+
+This is how the assembled robot will look like:
 <img src="diagrams/func-pic.png">
+
+The webserver was developed to be mobile friendly. The following pictures show how the UI looks like on desktop (top view) and on a mobile device (bottom view).
+
+## Control panel
+<img src="diagrams/mobile-1.png">
+The first panel is the control panel. On the top, the green circle indicates that the UART communication between the Raspberry Pi and Pyboard works properly. If there is an error, it will turn red. The live camera feed is displayed on the left. The robot can be controlled by the blue joystick on the right. The output from the joystick is transformed into left and right motor values using the arcade mixing function. The different power settings enable precise and fast movements. On the bottom, the servos can be setup on the go. Once the user clicks setup, the servo can be plugged in into the corresponding port and it can be controlled using the two arrows. Servos can be deinitialized by clicking the off button.
+
+## Navigation panel
+<img src="diagrams/mobile-2.png">
+The second panel is used for setting up and monitoring the autonomous mode. The map is displayed using the Leaflet JavaScript library. The map tiles were downloaded using the RgoogleMaps package and are stored on the Raspberry Pi. This enables the users to use the map without internet connection. Waypoints can either be added by entering their latitude and longitude or simply by clicking on the map. The waypoint can then be added to the list by clicking insert. Any waypoint can be removed from or added to the list, or can be set as home. Waypoints are uploaded to the Pyboard by clicking the upload button. Data such as the battery voltage, the motor’s current consumption and navigation information are displayed on the right. When the navigation is started the bottom four buttons will have the same colours as the LEDs.
+
+## Command history
+<img src="diagrams/mobile-3.png">
+The third panel shows the command history. To distinguish between the Pyboard’s and the Rasperry Pi’s messages, those sent by the Raspberry Pi have a blue background. The most popular actions can be called by clicking the buttons, or the user can issue any command by entering it to the input box.
+
 # Setup
 ## Hardware
 The robot uses two MCUs, a Pyboard v1.1 and a Raspberry Pi Zero W. The latter can be exchanged to any WiFi enabled Raspberry Pi.
